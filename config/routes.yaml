@@ -1,3 +1,16 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+home:
+    path: /
+    methods: GET|HEAD
+    controller: App\Controller\ArticleController::home
+
+article_index:
+    path: /articulos/
+    methods: GET|HEAD
+    controller: App\Controller\ArticleController::index
+
+article_show:
+    path: /articulos/{slug}
+    methods: GET|HEAD
+    requirements:
+        slug: '[0-9a-z_-]*'
+    controller: App\Controller\ArticleController::show

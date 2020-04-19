@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+<article>
+    <header>
+        <h1>{{ article.title }}</h1>
+    </header>
+
+    {{ article.content }}
+
+    <footer>
+        <time>{{ article.created|format_date("long") }}</time>
+    </footer>
+</article>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    {% for article in articles %}
+    <article>
+        <header>
+            <h1><a href="{{ path('article_show', {'slug': article.slug }) }}">{{ article.title }}</a></h1>
+        </header>
+
+        <p>{{ article.summary }}</p>
+
+        <footer>
+            <time>{{ article.created|format_date("long") }}</time>
+        </footer>
+    </article>
+    {% endfor %}
+    <a href="{{ path('article_index') }}">Todos los artículos</a>
+{% endblock %}
