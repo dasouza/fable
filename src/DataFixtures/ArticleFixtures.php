@@ -33,7 +33,47 @@ class ArticleFixtures extends Fixture
         $content = <<<EOF
         At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
 
-        Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p><p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+        Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+
+
+        A Second Level Header
+        ---------------------
+
+        Now is the time for all good men to come to
+        the aid of their country. This is just a
+        regular paragraph.
+
+        The quick brown fox jumped over the lazy
+        dog's back.
+
+        ### Header 3
+
+        > This is a blockquote.
+        >
+        > This is the second paragraph in the blockquote.
+        >
+        > ## This is an H2 in a blockquote
+
+        Some of these words *are emphasized*.
+        Some of these words _are emphasized also_.
+
+        Use two asterisks for **strong emphasis**.
+        Or, if you prefer, __use two underscores instead__.
+
+        *   Candy.
+        *   Gum.
+        *   Booze.
+
+        1.  Red
+        2.  Green
+        3.  Blue
+
+        I get 10 times more traffic from [Google][1] than from
+        [Yahoo][2] or [MSN][3].
+
+        [1]: http://google.com/        "Google"
+        [2]: http://search.yahoo.com/  "Yahoo Search"
+        [3]: http://search.msn.com/    "MSN Search"
         EOF;
 
         $article->setContent($content);
@@ -49,7 +89,23 @@ class ArticleFixtures extends Fixture
         $article->setSummary('Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.');
 
         $content = <<<EOF
-        # Country API
+        ```html
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>Welcome to Symfony!</title>
+            </head>
+            <body>
+                <h1>{{ page_title }}</h1>
+
+                {% if user.isLoggedIn %}
+                    Hello {{ user.name }}!
+                {% endif %}
+
+                {# ... #}
+            </body>
+        </html>
+        ```
 
         The information about the API is shown below as follows.
 
@@ -81,7 +137,7 @@ class ArticleFixtures extends Fixture
 
         **Response**
 
-        ```
+        ```json
         {
         "name": "Great Britain",
         "country_code": "GB"

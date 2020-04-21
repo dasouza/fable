@@ -8,7 +8,7 @@
         <h1>{{ article.title }}</h1>
     </header>
 
-    {{ article.content }}
+    {{ article.content|markdown }}
 
     <footer>
         <time>{{ article.created|format_date("long") }}</time>
