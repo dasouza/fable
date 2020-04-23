@@ -4,13 +4,13 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PostControllerTest extends WebTestCase
+class ArticleControllerTest extends WebTestCase
 {
 
     public function testArticleHome()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/articulos/');
+        $crawler = $client->request('GET', '/');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertGreaterThan(1, $crawler->filter('article')->count());
@@ -23,6 +23,21 @@ class PostControllerTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertGreaterThan(1, $crawler->filter('article')->count());
+    }
+
+    public function testArticleTagIndex()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/etiquetas/first-tag');
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEquals(1, $crawler->filter('article')->count());
+
+
+        $crawler = $client->request('GET', '/etiquetas/second-tag');
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEquals(2, $crawler->filter('article')->count());
     }
 
     public function testArticleShow()

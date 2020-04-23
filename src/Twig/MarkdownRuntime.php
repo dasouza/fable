@@ -28,13 +28,13 @@ class MarkdownRuntime implements RuntimeExtensionInterface
         // Convert markdown to html
         $parser = new MarkdownExtra();
 
-        $parser->code_span_content_func = function($code) {
+        $parser->code_span_content_func = function ($code) {
             $highlighted = $this->highlighter->highlightAuto($code);
 
             return $highlighted->value;
         };
 
-        $parser->code_block_content_func = function($code, $language) {
+        $parser->code_block_content_func = function ($code, $language) {
             $highlighted = $this->highlighter->highlightAuto($code);
 
             return $highlighted->value;

@@ -29,7 +29,7 @@ class ArticleRepositoryTest extends KernelTestCase
       ;
 
         $this->assertEquals(2, count($articles));
-        $this->assertEquals('first-article', $articles[0]->getSlug());
+        $this->assertEquals('first-article', $articles[0]['slug']);
     }
 
     public function testFindAllPublished()
@@ -40,8 +40,18 @@ class ArticleRepositoryTest extends KernelTestCase
       ;
 
         $this->assertGreaterThan(0, count($articles));
-        $this->assertEquals('first-article', $articles[0]->getSlug());
+        $this->assertEquals('first-article', $articles[0]['slug']);
     }
+
+    public function testFindAllPublishedByTag() {
+        $articles = $this->entityManager
+          ->getRepository(Article::class)
+          ->findAllPublishedByTag('second-tag')
+      ;
+
+        $this->assertEquals(2, count($articles));
+    }
+
 
     public function testFindOnePublishedBySlug()
     {
@@ -50,7 +60,7 @@ class ArticleRepositoryTest extends KernelTestCase
           ->findOnePublishedBySlug('first-article')
       ;
 
-        $this->assertSame('Lorem ipsum dolor sit amet, consectetur adipiscing elit.', $article->getSummary());
+        $this->assertSame('Lorem ipsum dolor sit amet, consectetur adipiscing elit.', $article['summary']);
     }
 
     protected function tearDown(): void

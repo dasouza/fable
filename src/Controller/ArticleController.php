@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Twig\Environment;
 use App\Repository\ArticleRepository;
+use App\Repository\TagRepository;
 
 class ArticleController
 {
@@ -19,10 +21,16 @@ class ArticleController
     */
     private $articleRepository;
 
-    public function __construct(Environment $twig, ArticleRepository $articleRepository)
+    /**
+    * @var TagRepository
+    */
+    private $tagRepository;
+
+    public function __construct(Environment $twig, ArticleRepository $articleRepository, TagRepository $tagRepository)
     {
         $this->twig = $twig;
         $this->articleRepository = $articleRepository;
+        $this->tagRepository = $tagRepository;
     }
 
     public function home() : Response
@@ -39,6 +47,19 @@ class ArticleController
         $articles = $this->articleRepository->findAllPublished();
 
         return new Response($this->twig->render('article/index.html.twig', [
+            'articles' => $articles,
+        ]), Response::HTTP_OK);
+    }
+
+    public function tagIndex(Request $request) : Response
+    {
+        if ($this->tagRepository->findOneBySlug($request->get('slug')) == null) {
+            throw new NotFoundHttpException();
+        }
+
+        $articles = $this->articleRepository->findAllPublishedByTag($request->get('slug'));
+
+        return new Response($this->twig->render('article/tagIndex.html.twig', [
             'articles' => $articles,
         ]), Response::HTTP_OK);
     }

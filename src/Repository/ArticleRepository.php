@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use App\Entity\Article;
 
 class ArticleRepository extends ServiceEntityRepository
 {
@@ -18,14 +20,20 @@ class ArticleRepository extends ServiceEntityRepository
     */
     public function findLatest($limit): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.published = :published')
+        $query = $this->createQueryBuilder('a')
+            ->select('a', 't')
+            ->leftJoin('a.tags', 't')
+            ->andWhere('a.published = :published')
+            ->orderBy('a.created', 'ASC')
             ->setParameter('published', true)
-            ->orderBy('p.created', 'ASC')
             ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
+            ->setHydrationMode(AbstractQuery::HYDRATE_ARRAY)
         ;
+
+        $paginator = new Paginator($query, true);
+
+        return $paginator->getIterator()->getArrayCopy();
     }
 
     /**
@@ -33,27 +41,50 @@ class ArticleRepository extends ServiceEntityRepository
     */
     public function findAllPublished(): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.published = :published')
+        return $this->createQueryBuilder('a')
+            ->select('a', 't')
+            ->leftJoin('a.tags', 't')
+            ->andWhere('a.published = :published')
+            ->orderBy('a.created', 'ASC')
             ->setParameter('published', true)
-            ->orderBy('p.created', 'ASC')
             ->getQuery()
-            ->getResult()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY)
         ;
     }
 
     /**
-    * @return Post Returns an Article object
+    * @return Article[] Returns an array of all Article objects
     */
-    public function findOnePublishedBySlug(string $slug): ?Article
+    public function findAllPublishedByTag(string $slug): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.published = :published')
+        return $this->createQueryBuilder('a')
+            ->select('a', 't1')
+            ->join('a.tags', 't1')
+            ->join('a.tags', 't2')
+            ->andWhere('t2.slug = :slug')
+            ->andWhere('a.published = :published')
+            ->orderBy('a.created', 'ASC')
+            ->setParameter('slug', $slug)
             ->setParameter('published', true)
-            ->andWhere('p.slug = :slug')
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_ARRAY)
+        ;
+    }
+
+    /**
+    * @return Article Returns an Article object
+    */
+    public function findOnePublishedBySlug(string $slug): ?array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a', 't')
+            ->leftJoin('a.tags', 't')
+            ->andWhere('a.published = :published')
+            ->andWhere('a.slug = :slug')
+            ->setParameter('published', true)
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY)
         ;
     }
 }

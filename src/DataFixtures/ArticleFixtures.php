@@ -3,10 +3,13 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use App\DataFixtures\TagFixtures;
 use App\Entity\Article;
+use App\Entity\Tag;
 
-class ArticleFixtures extends Fixture
+class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -22,6 +25,10 @@ class ArticleFixtures extends Fixture
         $article->setContent($content);
         $article->setCreated(new \DateTime());
         $article->setPublished(true);
+        $article->addTag($this->getReference(TagFixtures::FIRST_TAG_REFERENCE));
+        $article->addTag($this->getReference(TagFixtures::SECOND_TAG_REFERENCE));
+        $article->addTag($this->getReference(TagFixtures::THIRD_TAG_REFERENCE));
+        $article->addTag($this->getReference(TagFixtures::FOURTH_TAG_REFERENCE));
 
         $manager->persist($article);
 
@@ -79,6 +86,7 @@ class ArticleFixtures extends Fixture
         $article->setContent($content);
         $article->setCreated(new \DateTime());
         $article->setPublished(true);
+        $article->addTag($this->getReference(TagFixtures::SECOND_TAG_REFERENCE));
 
         $manager->persist($article);
 
@@ -158,5 +166,12 @@ class ArticleFixtures extends Fixture
         $manager->persist($article);
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return array(
+            TagFixtures::class,
+        );
     }
 }
