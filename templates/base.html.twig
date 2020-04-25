@@ -22,7 +22,22 @@
 
         <footer>
             <div>
-                <p>© 2020 Juan Sosa. <a href="https://github.com/dasouza/fable" target="_blank">Código fuente</a>. Contenidos bajo licencia <a rel="license" title="Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank">CC BY-NC-SA 4.0</a>.</p>
+                <section id="categories">
+                    <header>
+                        <h1>Categorías</h1>
+                    </header>
+
+                    {{ render(controller('App\\Controller\\ArticleController::categoryListFragment')) }}
+                </section>
+
+                <section id="tags">
+                    <header>
+                        <h1>Etiquetas</h1>
+                    </header>
+
+                    {{ render(controller('App\\Controller\\ArticleController::tagListFragment')) }}
+                </section>
+                <p>© 2020 Juan Sosa. <a title="Fable en github" href="https://github.com/dasouza/fable" target="_blank">Código fuente</a>. Contenidos bajo licencia <a rel="license" title="Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank">CC BY-NC-SA 4.0</a>.</p>
             </div>
         </footer>
         {% block javascripts %}

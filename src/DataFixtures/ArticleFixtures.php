@@ -5,8 +5,10 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use App\DataFixtures\CategoryFixtures;
 use App\DataFixtures\TagFixtures;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\Tag;
 
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
@@ -25,6 +27,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         $article->setContent($content);
         $article->setCreated(new \DateTime());
         $article->setPublished(true);
+        $article->setCategory($this->getReference(CategoryFixtures::SECOND_CATEGORY_REFERENCE));
         $article->addTag($this->getReference(TagFixtures::FIRST_TAG_REFERENCE));
         $article->addTag($this->getReference(TagFixtures::SECOND_TAG_REFERENCE));
         $article->addTag($this->getReference(TagFixtures::THIRD_TAG_REFERENCE));
@@ -86,7 +89,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         $article->setContent($content);
         $article->setCreated(new \DateTime());
         $article->setPublished(true);
-        $article->addTag($this->getReference(TagFixtures::SECOND_TAG_REFERENCE));
+        $article->setCategory($this->getReference(CategoryFixtures::SECOND_CATEGORY_REFERENCE));
+        $article->addTag($this->getReference(TagFixtures::FIRST_TAG_REFERENCE));
 
         $manager->persist($article);
 
@@ -162,6 +166,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         EOF;
         $article->setContent($content);
         $article->setPublished(true);
+        $article->setCategory($this->getReference(CategoryFixtures::FIRST_CATEGORY_REFERENCE));
 
         $manager->persist($article);
 
@@ -171,7 +176,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return array(
-            TagFixtures::class,
+            CategoryFixtures::class,
+            TagFixtures::class
         );
     }
 }

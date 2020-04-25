@@ -8,6 +8,13 @@ article_index:
     methods: GET|HEAD
     controller: App\Controller\ArticleController::index
 
+article_category_index:
+    path: /{slug}
+    methods: GET|HEAD
+    requirements:
+        slug: '^[0-9a-z_-]+'
+    controller: App\Controller\ArticleController::categoryIndex
+
 article_tag_index:
     path: /etiquetas/{slug}
     methods: GET|HEAD
@@ -16,8 +23,9 @@ article_tag_index:
     controller: App\Controller\ArticleController::tagIndex
 
 article_show:
-    path: /articulos/{slug}
+    path: /{category}/{slug}
     methods: GET|HEAD
     requirements:
+        category: '[0-9a-z_-]+'
         slug: '[0-9a-z_-]+'
     controller: App\Controller\ArticleController::show

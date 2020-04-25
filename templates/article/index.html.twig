@@ -4,19 +4,6 @@
 
 {% block body %}
     {% for article in articles %}
-    <article>
-        <header>
-            <h1><a href="{{ path('article_show', {'slug': article.slug }) }}">{{ article.title }}</a></h1>
-        </header>
-
-        <p>{{ article.summary }}</p>
-
-        <footer>
-            <time>{{ article.created|format_date("long") }}</time>
-            {% for tag in article.tags %}
-                <a href="{{ path('article_tag_index', {"slug": tag.slug }) }}" rel="tag">#{{ tag.name|title|replace({' ': ''}) }}</a>
-            {% endfor %}
-        </footer>
-    </article>
+        {{ include('article/fragment/articleSummary.html.twig', { article: article }) }}
     {% endfor %}
 {% endblock %}

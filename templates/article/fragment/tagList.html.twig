@@ -1,0 +1,5 @@
+<ul>
+{% for tag in tags %}
+    <li><a href="{{ path('article_tag_index', {"slug": tag.slug }) }}" rel="tag">#{{ tag.name|title|replace({' ': ''}) }}</a></li>
+{% endfor %}
+</ul>

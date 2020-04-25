@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Artículos{% endblock %}
+
+{% block body %}
+    {% for article in articles %}
+    <article>
+        <header>
+            <h1><a href="{{ path('article_show', {'category': article.category.slug, 'slug': article.slug }) }}">{{ article.title }}</a></h1>
+        </header>
+
+        <p>{{ article.summary }}</p>
+
+        <footer>
+            <time>{{ article.created|format_date("long") }}</time>
+            <a href="{{ path('article_category_index', {"slug": article.category.slug }) }}" rel="tag">{{ article.category.name }}</a>
+            {% for tag in article.tags %}
+                <a href="{{ path('article_tag_index', {"slug": tag.slug }) }}" rel="tag">#{{ tag.name|title|replace({' ': ''}) }}</a>
+            {% endfor %}
+        </footer>
+    </article>
+    {% endfor %}
+{% endblock %}

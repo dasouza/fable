@@ -11,10 +11,14 @@
     {{ article.content|markdown }}
 
     <footer>
+        <div>
+            <a href="{{ path('article_category_index', {"slug": article.category.slug }) }}" rel="tag">{{ article.category.name }}</a>
+            {% for tag in article.tags %}
+                <a href="{{ path('article_tag_index', {"slug": tag.slug }) }}" rel="tag">#{{ tag.name|title|replace({' ': ''}) }}</a>
+            {% endfor %}
+        </div>
+
         <time>{{ article.created|format_date("long") }}</time>
-        {% for tag in article.tags %}
-            <a href="{{ path('article_tag_index', {"slug": tag.slug }) }}" rel="tag">#{{ tag.name|title|replace({' ': ''}) }}</a>
-        {% endfor %}
     </footer>
 </article>
 {% endblock %}

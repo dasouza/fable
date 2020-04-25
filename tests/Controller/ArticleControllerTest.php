@@ -25,25 +25,40 @@ class ArticleControllerTest extends WebTestCase
         $this->assertGreaterThan(1, $crawler->filter('article')->count());
     }
 
+    public function testArticleCategoryIndex()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/first-category');
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEquals(1, $crawler->filter('article')->count());
+
+
+        $crawler = $client->request('GET', '/second-category');
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertEquals(2, $crawler->filter('article')->count());
+    }
+
     public function testArticleTagIndex()
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/etiquetas/first-tag');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertEquals(1, $crawler->filter('article')->count());
+        $this->assertEquals(2, $crawler->filter('article')->count());
 
 
         $crawler = $client->request('GET', '/etiquetas/second-tag');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertEquals(2, $crawler->filter('article')->count());
+        $this->assertEquals(1, $crawler->filter('article')->count());
     }
 
     public function testArticleShow()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/articulos/first-article');
+        $crawler = $client->request('GET', '/second-category/first-article');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertEquals(1, $crawler->filter('article')->count());

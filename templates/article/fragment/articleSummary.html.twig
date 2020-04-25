@@ -1,0 +1,11 @@
+<article>
+    <header>
+        <h1><a href="{{ path('article_show', {'category': article.category.slug, 'slug': article.slug }) }}">{{ article.title }}</a></h1>
+        <a href="{{ path('article_category_index', {"slug": article.category.slug }) }}" rel="tag">{{ article.category.name }}</a>
+        {% for tag in article.tags %}
+            <a href="{{ path('article_tag_index', {"slug": tag.slug }) }}" rel="tag">#{{ tag.name|title|replace({' ': ''}) }}</a>
+        {% endfor %}
+    </header>
+
+    <p>{{ article.summary }}</p>
+</article>

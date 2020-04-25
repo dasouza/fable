@@ -33,6 +33,8 @@ body {
 
         > div {
             flex-grow: 1;
+            display:flex;
+            flex-wrap: wrap;
             max-width: 720px;
             padding: 20px;
         }
@@ -40,16 +42,46 @@ body {
 
     main {
         flex: 1;
+        > div {
+            align-content: flex-start;
+        }
     }
 
     > footer {
+        background-color: darken($background-color, 2%);
+        border: solid 1px lighten($background-color, 1%);
         text-align: center;
         font-size: .8em;
         color: $secondary-text-color;
 
+        h1 {
+            font-size: 1.3em;
+        }
+
         a {
             color: $secondary-text-color;
             text-decoration: underline;
+        }
+
+        section {
+            flex-basis: 50%;
+        }
+
+        #tags {
+            ul {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            li {
+                flex-grow: 1;
+            }
+        }
+
+        > div > p {
+            flex-basis: 100%;
+            margin-top: 3em;
         }
     }
 }
@@ -65,16 +97,26 @@ article {
         font-size: 1.4em;
     }
 
+    header {
+        margin-bottom: 0.5em;
+    }
+
+    header > a {
+        font-size: .8em;
+        margin-right: .5em;
+    }
+
     footer {
         font-size: .8em;
+        display: flex;
 
         time {
-
-          color: $secondary-text-color;
+            color: $secondary-text-color;
         }
 
-        a {
-            margin-right: .5em;
+        > div {
+            flex-grow: 1;
+
         }
     }
 
@@ -101,12 +143,12 @@ article {
     }
 
     pre {
-      background-color: darken($background-color, 3%);
-      padding: 15px;
-      font-size:.8em;
-      line-height: 1.2em;
-      border: solid 1px darken($background-color, 6%);
-      overflow: auto;
+        background-color: darken($background-color, 3%);
+        padding: 15px;
+        font-size:.8em;
+        line-height: 1.2em;
+        border: solid 1px darken($background-color, 6%);
+        overflow: auto;
     }
 
     table {

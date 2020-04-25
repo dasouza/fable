@@ -46,7 +46,7 @@ class ArticleRepositoryTest extends KernelTestCase
     public function testFindAllPublishedByTag() {
         $articles = $this->entityManager
           ->getRepository(Article::class)
-          ->findAllPublishedByTag('second-tag')
+          ->findAllPublishedByTag('first-tag')
       ;
 
         $this->assertEquals(2, count($articles));
@@ -57,7 +57,7 @@ class ArticleRepositoryTest extends KernelTestCase
     {
         $article = $this->entityManager
           ->getRepository(Article::class)
-          ->findOnePublishedBySlug('first-article')
+          ->findOnePublishedBySlug('second-category', 'first-article')
       ;
 
         $this->assertSame('Lorem ipsum dolor sit amet, consectetur adipiscing elit.', $article['summary']);
