@@ -19,10 +19,19 @@ class ArticleControllerTest extends WebTestCase
     public function testArticleIndex()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/articulos/');
+        $crawler = $client->request('GET', '/articulos');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertGreaterThan(1, $crawler->filter('article')->count());
+    }
+
+    public function testArticleFeed()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/articulos.xml');
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/xml; charset=utf-8'));
+        $this->assertGreaterThan(1, $crawler->filter('item')->count());
     }
 
     public function testArticleCategoryIndex()

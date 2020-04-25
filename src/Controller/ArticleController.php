@@ -49,13 +49,19 @@ class ArticleController
         ]), Response::HTTP_OK);
     }
 
-    public function index() : Response
+    public function index(string $_format) : Response
     {
         $articles = $this->articleRepository->findAllPublished();
 
-        return new Response($this->twig->render('article/index.html.twig', [
+        $response = new Response($this->twig->render('article/index.'.$_format.'.twig', [
             'articles' => $articles,
         ]), Response::HTTP_OK);
+
+        if ($_format == 'xml') {
+            $response->headers->set('Content-Type', 'application/xml; charset=utf-8');
+        }
+        
+        return $response;
     }
 
     public function categoryIndex(Request $request) : Response

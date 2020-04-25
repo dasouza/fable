@@ -4,9 +4,12 @@ home:
     controller: App\Controller\ArticleController::home
 
 article_index:
-    path: /articulos/
+    path: /articulos.{_format}
     methods: GET|HEAD
+    format: html
     controller: App\Controller\ArticleController::index
+    requirements:
+        _format: xml
 
 article_category_index:
     path: /{slug}
